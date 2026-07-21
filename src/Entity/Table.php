@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TableRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TableRepository::class)]
@@ -19,6 +21,17 @@ class Table
 
     #[ORM\Column(name: 'capacite_table')]
     private ?int $capacite_table = null;
+
+    /**
+     * @var Collection<int, Reservation>
+     */
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'tableRestaurant')]
+    private Collection $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getIdTable(): ?int
     {
@@ -45,6 +58,36 @@ class Table
     public function setCapaciteTable(int $capacite_table): static
     {
         $this->capacite_table = $capacite_table;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setTableRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getTableRestaurant() === $this) {
+                $reservation->setTableRestaurant(null);
+            }
+        }
 
         return $this;
     }
