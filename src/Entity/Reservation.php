@@ -26,11 +26,11 @@ class Reservation
     private ?string $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id_user', nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'id_table', referencedColumnName: 'id_table', nullable: false)]
     private ?Table $tableRestaurant = null;
 
     public function getIdReservation(): ?int
