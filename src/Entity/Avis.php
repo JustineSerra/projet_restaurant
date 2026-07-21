@@ -26,7 +26,7 @@ class Avis
     private ?bool $is_approuve = null;
 
     #[ORM\ManyToOne(inversedBy: 'avis')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id_user', nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
     public function getIdAvis(): ?int

@@ -29,6 +29,11 @@ class Formule
      * @var Collection<int, Plat>
      */
     #[ORM\ManyToMany(targetEntity: Plat::class, inversedBy: 'formules')]
+    #[ORM\JoinTable(
+        name: 'formule_plat',
+        joinColumns: [new ORM\JoinColumn(name: 'id_formule', referencedColumnName: 'id_formule')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'id_plat', referencedColumnName: 'id_plat')]
+    )]
     private Collection $plats;
 
     public function __construct()
