@@ -14,7 +14,7 @@ class Formule
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id_formule')]
-    private ?int $id = null;
+    private ?int $id_formule = null;
 
     #[ORM\Column(length: 50)]
     private ?string $nom_formule = null;
@@ -36,9 +36,9 @@ class Formule
         $this->plats = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getIdFormule(): ?int
     {
-        return $this->id;
+        return $this->id_formule;
     }
 
     public function getNomFormule(): ?string
